@@ -54,6 +54,22 @@ module.exports = {
         test: /\.css$/,
         include: helpers.root('src', 'app'),
         use: 'raw-loader'
+      },
+      {
+        test: /\.styl/,
+        use: [
+          'raw-loader',
+          {
+            loader: 'postcss-loader',
+            options: {
+              sourceMap: true,
+              config: {
+                path: helpers.root('postcss.config.js')
+              }
+            }
+          },
+          'stylus-loader'
+        ]
       }
     ]
   },

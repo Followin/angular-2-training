@@ -3,3 +3,4 @@ functions/
 dist/
 .idea/
 *.swp
+npm-debug.log
