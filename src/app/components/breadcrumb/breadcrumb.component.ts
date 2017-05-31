@@ -10,6 +10,7 @@ interface Breadcrumb {
 @Component({
   selector: 'breadcrumb',
   templateUrl: './breadcrumb.component.html',
+  styleUrls: ['./breadcrumb.component.styl'],
 })
 export default class BreadcrumbComponent implements OnInit {
   private breadcrumbs: Breadcrumb[];

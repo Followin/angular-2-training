@@ -1,0 +1,18 @@
+@import '../../styles/_colors.styl';
+
+:host .breadcrumb {
+  background: colors.primary-color;
+  margin-bottom: 0;
+};
+
+.breadcrumb-item {
+  color: colors.primary-color-text;
+
+  &.active {
+    color: colors.primary-text-color;
+  }
+
+  a {
+    color: colors.primary-color-text;
+  }
+}

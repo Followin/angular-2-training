@@ -8,6 +8,9 @@ import CoursesComponent from './pages/courses';
 import { ROUTES } from './app.routes';
 import IndexComponent from './pages/index';
 import BreadcrumbComponent from "./components/breadcrumb";
+import HeaderComponent from './components/header';
+import LogoComponent from './components/logo';
+import LoginComponent from './components/login';
 
 @NgModule({
   imports: [
@@ -19,6 +22,9 @@ import BreadcrumbComponent from "./components/breadcrumb";
     IndexComponent,
     BreadcrumbComponent,
     CoursesComponent,
+    HeaderComponent,
+    LoginComponent,
+    LogoComponent,
   ],
   bootstrap: [ AppComponent ],
 })
