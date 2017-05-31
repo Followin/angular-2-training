@@ -6,6 +6,8 @@ import { AppComponent } from './app.component';
 import CoursesComponent from './pages/courses';
 
 import { ROUTES } from './app.routes';
+import IndexComponent from './pages/index';
+import BreadcrumbComponent from "./components/breadcrumb";
 
 @NgModule({
   imports: [
@@ -14,6 +16,8 @@ import { ROUTES } from './app.routes';
   ],
   declarations: [
     AppComponent,
+    IndexComponent,
+    BreadcrumbComponent,
     CoursesComponent,
   ],
   bootstrap: [ AppComponent ],
