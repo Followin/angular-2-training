@@ -11,6 +11,6 @@ export default class Course implements ICourse {
         public title: string,
         public description: string,
         public duration: number,
-        public createdAt: Date
+        public createdAt: Date,
     ) {}
 }

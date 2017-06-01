@@ -56,7 +56,8 @@ module.exports = {
         use: 'raw-loader'
       },
       {
-        test: /\.styl/,
+        test: /\.styl$/,
+        include: helpers.root('src', 'app'),
         use: [
           'raw-loader',
           {
@@ -70,16 +71,21 @@ module.exports = {
           },
           'stylus-loader'
         ]
+      },
+      {
+        test: /\.styl$/,
+        exclude: helpers.root('src', 'app'),
+        use: ExtractTextPlugin.extract({ use: ['css-loader', 'stylus-loader'] })
       }
     ]
   },
 
   plugins: [
     new webpack.ContextReplacementPlugin(
-      /angular(\\|\/)core(\\|\/)(esm(\\|\/)src|src)(\\|\/)linker/,
-      helpers.root('./src'),
-      {}
-    ),
+        /angular(\\|\/)core(\\|\/)@angular/,
+        helpers.root('src'),
+        { }
+      ),
 
     new webpack.optimize.CommonsChunkPlugin({
       name: ['app', 'vendor', 'polyfills']

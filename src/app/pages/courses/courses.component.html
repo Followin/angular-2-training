@@ -1,1 +1,17 @@
-<h1>Hello from courses component</h1>
+<div class="top-buffer-1">
+  <div class="col-xs-3">
+    <div class="input-group">
+      <input type="text" class="form-control" placeholder="Search for course..." [(ngModel)]="filter">
+      <span class="input-group-btn">
+        <button class="btn btn-default" type="button" (click)="search()">Find</button>
+      </span>
+    </div>
+  </div>
+  <div class="col-xs-9 text-right">
+    <button class="btn accent">
+      <span class="glyphicon glyphicon-file"></span>
+      Add course
+    </button>
+  </div>
+</div>
+<course *ngFor="let course of courses" [course]="course" class="col-xs-12" (onDelete)="deleteCourse($event)"></course>

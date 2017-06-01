@@ -7,7 +7,10 @@ import '@angular/router';
 
 import 'rxjs';
 
-//styles
+//styles libs
 import '../node_modules/normalize.css/normalize.css';
 import '../node_modules/bootstrap/dist/css/bootstrap.css';
 import '../node_modules/bootstrap/dist/js/bootstrap.js';
+
+//custom styles
+import './styles/shared.styl';
