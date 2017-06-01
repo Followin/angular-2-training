@@ -14,6 +14,7 @@ import LogoComponent from './components/logo';
 import LoginComponent from './components/login';
 import CourseComponent from './components/course';
 import FooterComponent from './components/footer';
+import CourseEditComponent from './pages/course-edit';
 
 @NgModule({
   imports: [
@@ -31,6 +32,7 @@ import FooterComponent from './components/footer';
     LogoComponent,
     CourseComponent,
     FooterComponent,
+    CourseEditComponent,
   ],
   bootstrap: [ AppComponent ],
 })

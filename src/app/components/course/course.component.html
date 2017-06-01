@@ -11,7 +11,7 @@
   </div>
   <div class="col-xs-2">
     <div class="col-xs-12">
-      <button class="btn btn-default col-xs-8">Edit</button>
+      <a [routerLink]="['/courses', course.id]" class="btn btn-default col-xs-8">Edit</a>
     </div>
     <div class="col-xs-12 top-buffer-1">
       <button (click)="deleteCourse()" class="btn btn-danger col-xs-8">Delete</button>

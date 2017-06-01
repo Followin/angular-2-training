@@ -27,7 +27,7 @@ export default class BreadcrumbComponent implements OnInit {
 
   private getBreadcrumbs(url: string) {
     const entries = this.router.config
-      .filter(route => url.indexOf(route.path) > -1)
+      .filter(route => this.isRoutePartOfUrl(url, route.path))
       .sort((route1, route2) => route1.path.length - route2.path.length);
 
     const lastEntry = entries.pop();
@@ -35,5 +35,34 @@ export default class BreadcrumbComponent implements OnInit {
     result.push({url: null, label: lastEntry.data.label, active: true});
 
     return result;
+  }
+
+  private isRoutePartOfUrl(url: string, route: string) {
+    if (route === '') {
+      return true;
+    }
+
+    const entryIndex = url.indexOf(route);
+    const urlSegments = url.split('/').slice(1);
+    const routeSegments = route.split('/');
+
+    let i;
+    for (i = 0; i < routeSegments.length && i < urlSegments.length; i++) {
+      if (routeSegments[i].startsWith(':')) {
+        continue;
+      }
+
+      if (routeSegments[i] === urlSegments[i]) {
+        continue;
+      } else {
+        return false;
+      }
+    }
+
+    if (i < routeSegments.length) {
+      return false;
+    } else {
+      return true;
+    }
   }
 }
