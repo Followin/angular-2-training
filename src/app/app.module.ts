@@ -15,8 +15,10 @@ import LoginComponent from './components/login';
 import CourseComponent from './components/course';
 import FooterComponent from './components/footer';
 import CourseEditComponent from './pages/course-edit';
+import LoginPage from './pages/login';
 
 import CourseService from './services/course.service';
+import LoginService from './services/login.service';
 
 @NgModule({
   imports: [
@@ -35,9 +37,11 @@ import CourseService from './services/course.service';
     CourseComponent,
     FooterComponent,
     CourseEditComponent,
+    LoginPage,
   ],
   providers: [
     CourseService,
+    LoginService,
   ],
   bootstrap: [ AppComponent ],
 })
