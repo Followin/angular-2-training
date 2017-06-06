@@ -16,6 +16,8 @@ import CourseComponent from './components/course';
 import FooterComponent from './components/footer';
 import CourseEditComponent from './pages/course-edit';
 
+import CourseService from './services/course.service';
+
 @NgModule({
   imports: [
     BrowserModule,
@@ -33,6 +35,9 @@ import CourseEditComponent from './pages/course-edit';
     CourseComponent,
     FooterComponent,
     CourseEditComponent,
+  ],
+  providers: [
+    CourseService,
   ],
   bootstrap: [ AppComponent ],
 })
