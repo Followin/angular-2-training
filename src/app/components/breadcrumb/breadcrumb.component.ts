@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 
 interface Breadcrumb {
@@ -11,6 +11,7 @@ interface Breadcrumb {
   selector: 'breadcrumb',
   templateUrl: './breadcrumb.component.html',
   styleUrls: ['./breadcrumb.component.styl'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export default class BreadcrumbComponent implements OnInit {
   private breadcrumbs: Breadcrumb[];

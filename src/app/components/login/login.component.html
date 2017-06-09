@@ -1,7 +1,7 @@
-<div *ngIf="loginService.isAuthenticated">
-  <span class="col-xs-12 no-padding">Hi, {{loginService.userName}}</span>
+<div *ngIf="isLoggedIn">
+  <span class="col-xs-12 no-padding">Hi, {{userName}}</span>
   <a href="javascript:void(0)" (click)="logout()" class="col-xs-12 no-padding">Log out</a>
 </div>
-<div *ngIf="!loginService.isAuthenticated">
+<div *ngIf="!isLoggedIn">
   <a routerLink="/login" class="col-xs-12 no-padding">Log in</a>
 </div>

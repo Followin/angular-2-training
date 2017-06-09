@@ -1,19 +1,26 @@
-import { Component } from '@angular/core';
+import {Component, ChangeDetectionStrategy} from '@angular/core';
 import { Router } from '@angular/router';
 import LoginService from '../../services/login.service';
+import LoaderService from '../../services/loader.service';
 
 @Component({
   selector: 'login-page',
   templateUrl: './login.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export default class LoginComponent {
   constructor(
     private router: Router,
     private loginService: LoginService,
+    private loader: LoaderService,
   ) { }
 
   public login(): void {
-    this.loginService.login();
-    this.router.navigate(['/courses']);
+    this.loader.show();
+    setTimeout(() => {
+      this.loginService.login();
+      this.router.navigate(['/courses']);
+      this.loader.hide();
+    }, 2000);
   }
 }

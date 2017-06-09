@@ -1,19 +1,23 @@
-import { Component } from '@angular/core';
+import {Component, ChangeDetectionStrategy} from '@angular/core';
 import Course from '../../models/course';
 import CourseService from '../../services/course.service';
+import LoaderService from '../../services/loader.service';
 import swal from 'sweetalert2';
+import {Observable} from 'rxjs';
 
 @Component({
   selector: 'courses',
   templateUrl: './courses.component.html',
   styleUrls: ['./courses.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export default class CoursesComponent {
-  private courses: Course[];
+  private courses: Observable<Course[]>;
   private filter: string;
 
   constructor(
     private courseService: CourseService,
+    private loaderService: LoaderService,
   ) { }
 
   public ngOnInit() {
@@ -34,14 +38,11 @@ export default class CoursesComponent {
       cancelButtonColor: '#d33',
       confirmButtonText: 'Yes',
     }).then(() => {
-      this.courseService.remove(id);
-      this.courses = this.courseService.get();
-
-      swal(
-        'Deleted!',
-        'Course has been deleted',
-        'success',
-      );
+      this.loaderService.show();
+      setTimeout(() => {
+        this.courseService.remove(id);
+        this.loaderService.hide();
+      }, 2000);
     }, dismiss => {
       if (dismiss === 'cancel') {
         swal(

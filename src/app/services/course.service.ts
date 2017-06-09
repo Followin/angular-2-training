@@ -1,4 +1,5 @@
 import Course from '../models/course';
+import {BehaviorSubject, Observable} from 'rxjs';
 
 export default class {
   private courses: Course[] = [{
@@ -19,22 +20,26 @@ export default class {
     createdAt: new Date(),
   }];
 
+  private coursesSubject: BehaviorSubject<Course[]> = new BehaviorSubject(this.courses);
+
   private lastIndex: number = 2;
 
-  public get(): Course[];
+  public get(): Observable<Course[]>;
   public get(id: number): Course;
 
-  public get(id?: number): Course[] | Course {
+  public get(id?: number): Observable<Course[]> | Course {
     if (id != null) {
       return this.courses.find(course => course.id === id);
     }
 
-    return this.courses.slice(0);
+    return this.coursesSubject.asObservable();
   }
 
   public create(course: Course): void {
     course.id = ++this.lastIndex;
     this.courses.push(course);
+
+    this.coursesSubject.next(this.courses);
   }
 
   public update(course: Course): void {
@@ -42,6 +47,8 @@ export default class {
     const index = this.courses.indexOf(existingCourse);
 
     this.courses[index] = course;
+
+    this.coursesSubject.next(this.courses);
   }
 
   public remove(id: number): void {
@@ -49,5 +56,7 @@ export default class {
     const index = this.courses.indexOf(existingCourse);
 
     this.courses.splice(index, 1);
+
+    this.coursesSubject.next(this.courses);
   }
 }
