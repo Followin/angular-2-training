@@ -7,7 +7,7 @@
     "start": "webpack-dev-server --inline --progress --port 8080",
     "build": "rimraf dist && webpack --config config/webpack.prod.js --progress --profile --bail",
     "deploy": "npm run build && firebase login && firebase deploy",
-    "deploy:ci": "firebase deploy --token \"%FIREBASE_TOKEN%\""
+    "deploy:ci": "firebase deploy --token \"$FIREBASE_TOKEN\""
   },
   "author": "",
   "license": "ISC",
