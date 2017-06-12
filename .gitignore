@@ -4,3 +4,5 @@ dist/
 .idea/
 *.swp
 npm-debug.log
+
+firebase-debug\.log
