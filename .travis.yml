@@ -1,0 +1,6 @@
+install:
+  npm install
+script:
+  npm build
+after_success:
+  npm run deploy:ci
