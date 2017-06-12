@@ -1,9 +1,12 @@
-<div class="col-xs-12 top-buffer-2 course card-1">
+<div class="col-xs-12 top-buffer-2 course card-1" [ngClass]="{'top-course': course.top}" [dateHighlight]="course.createdAt">
   <div class="col-xs-10">
     <div class="row">
-      <span class="col-xs-3">{{course.title}}</span>
-      <span class="col-xs-4">{{course.duration}} min</span>
-      <span class="col-xs-5 text-right">{{course.createdAt.toDateString()}}</span>
+      <span class="col-xs-3">{{course.title | uppercase}}</span>
+      <span class="col-xs-4">{{course.duration | duration}}</span>
+      <span class="col-xs-1">
+          <i class="glyphicon glyphicon-star-empty top-course-star" data-toggle="tooltip" data-placement="top" title="Top Course"></i>
+      </span>
+      <span class="col-xs-4 text-right">{{course.createdAt | date}}</span>
     </div>
     <p class="row col-xs-12 text-secondary top-buffer-1">
       {{course.description}}

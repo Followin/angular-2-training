@@ -22,6 +22,11 @@ import CourseService from './services/course.service';
 import LoginService from './services/login.service';
 import LoaderService from './services/loader.service';
 
+import DateHighlightDirective from './directives/date-highlight.directive';
+
+import DurationPipe from './pipes/duration.pipe';
+import OrderCoursesByCreationDatePipe from './pipes/orderCoursesByCreationDate.pipe';
+
 @NgModule({
   imports: [
     BrowserModule,
@@ -41,6 +46,11 @@ import LoaderService from './services/loader.service';
     CourseEditComponent,
     LoginPage,
     LoaderBlockComponent,
+
+    DateHighlightDirective,
+
+    DurationPipe,
+    OrderCoursesByCreationDatePipe,
   ],
   providers: [
     CourseService,

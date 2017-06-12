@@ -8,12 +8,13 @@ import {Observable} from 'rxjs';
 @Component({
   selector: 'courses',
   templateUrl: './courses.component.html',
-  styleUrls: ['./courses.component.css'],
+  styleUrls: ['./courses.component.styl'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export default class CoursesComponent {
   private courses: Observable<Course[]>;
-  private filter: string;
+  private hasCourses: boolean;
+  private filter: string = '';
 
   constructor(
     private courseService: CourseService,
@@ -21,11 +22,21 @@ export default class CoursesComponent {
   ) { }
 
   public ngOnInit() {
-    this.courses = this.courseService.get();
+    this.initCourses();
+
+    this.courseService.get().subscribe(value => {
+      this.hasCourses = !!value.length;
+    });
   }
 
   private search() {
-    console.log(this.filter);
+    this.initCourses();
+  }
+
+  private initCourses() {
+    this.courses = this.courseService.get()
+      .map(courses => courses.filter(
+        course => course.title.toLowerCase().indexOf(this.filter.toLowerCase()) > -1));
   }
 
   private deleteCourse(id: number) {
@@ -42,7 +53,7 @@ export default class CoursesComponent {
       setTimeout(() => {
         this.courseService.remove(id);
         this.loaderService.hide();
-      }, 2000);
+      }, 500);
     }, dismiss => {
       if (dismiss === 'cancel') {
         swal(
