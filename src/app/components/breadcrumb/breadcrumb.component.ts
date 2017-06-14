@@ -1,5 +1,6 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { Router, NavigationEnd } from '@angular/router';
+import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+import { Router, NavigationEnd, Route } from '@angular/router';
+import { groupBy } from '../../utils/array';
 
 interface Breadcrumb {
   url?: string;
@@ -18,17 +19,22 @@ export default class BreadcrumbComponent implements OnInit {
 
   constructor(
       private router: Router,
+      private ref: ChangeDetectorRef,
   ) { }
 
   public ngOnInit(): void {
     this.router.events.filter(event => event instanceof NavigationEnd).subscribe(event => {
       this.breadcrumbs = this.getBreadcrumbs((<NavigationEnd> event).url);
+
+      this.ref.markForCheck();
     });
   }
 
   private getBreadcrumbs(url: string) {
-    const entries = this.router.config
-      .filter(route => this.isRoutePartOfUrl(url, route.path))
+    let entries = this.router.config
+      .filter(route => this.isRoutePartOfUrl(url, route.path));
+
+    entries = this.filterAmbiguousRoutes(url, entries)
       .sort((route1, route2) => route1.path.length - route2.path.length);
 
     const lastEntry = entries.pop();
@@ -65,5 +71,35 @@ export default class BreadcrumbComponent implements OnInit {
     } else {
       return true;
     }
+  }
+
+  private filterAmbiguousRoutes(url: string, routes: Route[]): Route[] {
+    let routesBySegmentNumber = groupBy(routes, (route: Route) => {
+      if (route.path.length === 0) {
+        return 0;
+      }
+
+      return route.path.split('/').length;
+    });
+
+    for (let routesGroup of routesBySegmentNumber) {
+      if (routesGroup.items.length === 1) {
+        continue;
+      }
+
+      let segmentsList = routesGroup.items.map(route => route.path.split('/'));
+
+      for (let i = 0; i < segmentsList[0].length; i++) {
+        const exactMatches = segmentsList.filter(segments => !segments[i].startsWith(':'));
+
+        if (exactMatches.length === 1) {
+          const exactMatchIndex = segmentsList.indexOf(exactMatches[0]);
+
+          routesGroup.items = [ routesGroup.items[exactMatchIndex] ];
+        }
+      }
+    }
+
+    return routesBySegmentNumber.map(routesGroup => routesGroup.items[0]);
   }
 }

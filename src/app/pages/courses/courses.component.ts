@@ -34,9 +34,14 @@ export default class CoursesComponent {
   }
 
   private initCourses() {
+    const minDate = new Date();
+    minDate.setDate(minDate.getDate() - 14);
+
     this.courses = this.courseService.get()
-      .map(courses => courses.filter(
-        course => course.title.toLowerCase().indexOf(this.filter.toLowerCase()) > -1));
+      .map(courses => 
+        courses.filter(course => 
+          course.createdAt >= minDate
+          && course.title.toLowerCase().indexOf(this.filter.toLowerCase()) > -1));
   }
 
   private deleteCourse(id: number) {

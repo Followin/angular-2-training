@@ -36,11 +36,11 @@ export default class {
   }
 
   public get(): Observable<Course[]>;
-  public get(id: number): Course;
+  public get(id: number): Observable<Course>;
 
-  public get(id?: number): Observable<Course[]> | Course {
+  public get(id?: number): Observable<Course[]> | Observable<Course> {
     if (id != null) {
-      return this.courses.find(course => course.id === id);
+      return Observable.of(this.courses.find(course => course.id === id));
     }
 
     return this.coursesSubject.asObservable();
@@ -54,20 +54,22 @@ export default class {
   }
 
   public update(course: Course): void {
-    const existingCourse = this.get(course.id);
-    const index = this.courses.indexOf(existingCourse);
+    const existingCourse = this.get(course.id).subscribe(course => {
+      const index = this.courses.indexOf(course);
 
-    this.courses[index] = course;
+      this.courses[index] = course;
 
-    this.coursesSubject.next(this.courses);
+      this.coursesSubject.next(this.courses);
+    });;
   }
 
   public remove(id: number): void {
-    const existingCourse = this.get(id);
-    const index = this.courses.indexOf(existingCourse);
+    const existingCourse = this.get(id).subscribe(course => {
+      const index = this.courses.indexOf(course);
 
-    this.courses.splice(index, 1);
+      this.courses.splice(index, 1);
 
-    this.coursesSubject.next(this.courses);
+      this.coursesSubject.next(this.courses);
+    });
   }
 }
