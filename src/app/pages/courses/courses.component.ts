@@ -38,8 +38,8 @@ export default class CoursesComponent {
     minDate.setDate(minDate.getDate() - 14);
 
     this.courses = this.courseService.get()
-      .map(courses => 
-        courses.filter(course => 
+      .map(courses =>
+        courses.filter(course =>
           course.createdAt >= minDate
           && course.title.toLowerCase().indexOf(this.filter.toLowerCase()) > -1));
   }

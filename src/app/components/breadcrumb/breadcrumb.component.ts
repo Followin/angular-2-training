@@ -74,20 +74,20 @@ export default class BreadcrumbComponent implements OnInit {
   }
 
   private filterAmbiguousRoutes(url: string, routes: Route[]): Route[] {
-    let routesBySegmentNumber = groupBy(routes, (route: Route) => {
-      if (route.path.length === 0) {
+    const routesBySegmentNumber = groupBy(routes, (route: Route) => {
+      if (route.path.length == 0) {
         return 0;
       }
 
       return route.path.split('/').length;
     });
 
-    for (let routesGroup of routesBySegmentNumber) {
+    for (const routesGroup of routesBySegmentNumber) {
       if (routesGroup.items.length === 1) {
         continue;
       }
 
-      let segmentsList = routesGroup.items.map(route => route.path.split('/'));
+      const segmentsList = routesGroup.items.map(route => route.path.split('/'));
 
       for (let i = 0; i < segmentsList[0].length; i++) {
         const exactMatches = segmentsList.filter(segments => !segments[i].startsWith(':'));

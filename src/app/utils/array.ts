@@ -3,8 +3,8 @@ interface Selector<TInput, TOutput> {
 }
 
 class Grouping<T, TKey> {
-  items: T[];
-  key: TKey
+  public items: T[];
+  public key: TKey;
 }
 
 export function groupBy<T, TKey>(items: T[], selector: Selector<T, TKey>): Grouping<T, TKey>[] {
@@ -19,4 +19,4 @@ export function groupBy<T, TKey>(items: T[], selector: Selector<T, TKey>): Group
 
     return result;
   }, []);
-};
+}

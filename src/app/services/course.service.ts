@@ -56,19 +56,6 @@ export default class {
     this.coursesSubject.next(this.courses);
   }
 
-  private create(course: Course): void {
-    course.id = ++this.lastIndex;
-    this.courses.push(course);
-  }
-
-  private update(course: Course): void {
-    const existingCourse = this.get(course.id).subscribe(course => {
-      const index = this.courses.indexOf(course);
-
-      this.courses[index] = course;
-    });;
-  }
-
   public remove(id: number): void {
     const existingCourse = this.get(id).subscribe(course => {
       const index = this.courses.indexOf(course);
@@ -81,5 +68,18 @@ export default class {
 
   private mapToData(course: any): Course {
     return <Course> course;
+  }
+
+  private create(course: Course): void {
+    course.id = ++this.lastIndex;
+    this.courses.push(course);
+  }
+
+  private update(course: Course): void {
+    const existingCourse = this.get(course.id).subscribe(course => {
+      const index = this.courses.indexOf(course);
+
+      this.courses[index] = course;
+    });
   }
 }
