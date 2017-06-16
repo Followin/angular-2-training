@@ -17,6 +17,9 @@ import FooterComponent from './components/footer';
 import CourseEditComponent from './pages/course-edit';
 import LoginPage from './pages/login';
 import LoaderBlockComponent from './components/loader-block';
+import DateInputComponent from './components/date-input';
+import DurationInputComponent from './components/duration-input';
+import MultiSelectComponent from './components/multiselect';
 
 import CourseService from './services/course.service';
 import LoginService from './services/login.service';
@@ -46,6 +49,9 @@ import OrderCoursesByCreationDatePipe from './pipes/orderCoursesByCreationDate.p
     CourseEditComponent,
     LoginPage,
     LoaderBlockComponent,
+    DateInputComponent,
+    DurationInputComponent,
+    MultiSelectComponent,
 
     DateHighlightDirective,
 

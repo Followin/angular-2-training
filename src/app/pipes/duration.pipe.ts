@@ -5,7 +5,11 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export default class DurationPipe implements PipeTransform {
   public transform(minutes: number): string {
-    return `${this.getHoursString(minutes)} ${this.getMinutesString(minutes)}`;
+    if (minutes) {
+      return `${this.getHoursString(minutes)} ${this.getMinutesString(minutes)}`;
+    }
+
+    return 'no duration specified';
   }
 
   private getHoursString(minutes: number): string {

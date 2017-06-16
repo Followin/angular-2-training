@@ -7,8 +7,8 @@ import LoginPage from './pages/login';
 export const ROUTES: Routes = [
   { path: '', component: IndexComponent, data: { label: 'Home' } },
   { path: 'courses', component: CoursesComponent, data: { label: 'Courses' } },
-  { path: 'courses/:id', component: CourseEditComponent, data: { label: 'Edit' } },
   { path: 'courses/create', component: CourseEditComponent, data: { label: 'Create' } },
+  { path: 'courses/:id', component: CourseEditComponent, data: { label: 'Edit' } },
   { path: 'login', component: LoginPage, data: { label: 'Login' } },
   { path: '**', component: IndexComponent },
 ];

@@ -43,23 +43,29 @@ export default class {
       return Observable.of(this.courses.find(course => course.id === id));
     }
 
-    return this.coursesSubject.asObservable();
+    return this.coursesSubject.asObservable().map(this.mapToData);
   }
 
-  public create(course: Course): void {
-    course.id = ++this.lastIndex;
-    this.courses.push(course);
+  public createOrUpdate(course: Course) {
+    if (course.id) {
+      this.update(course);
+    } else {
+      this.create(course);
+    }
 
     this.coursesSubject.next(this.courses);
   }
 
-  public update(course: Course): void {
+  private create(course: Course): void {
+    course.id = ++this.lastIndex;
+    this.courses.push(course);
+  }
+
+  private update(course: Course): void {
     const existingCourse = this.get(course.id).subscribe(course => {
       const index = this.courses.indexOf(course);
 
       this.courses[index] = course;
-
-      this.coursesSubject.next(this.courses);
     });;
   }
 
@@ -71,5 +77,9 @@ export default class {
 
       this.coursesSubject.next(this.courses);
     });
+  }
+
+  private mapToData(course: any): Course {
+    return <Course> course;
   }
 }
