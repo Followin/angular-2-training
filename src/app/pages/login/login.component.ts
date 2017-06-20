@@ -17,10 +17,9 @@ export default class LoginComponent {
 
   public login(): void {
     this.loader.show();
-    setTimeout(() => {
-      this.loginService.login();
+    this.loginService.login("admin", "admin").subscribe(result => {
       this.router.navigate(['/courses']);
       this.loader.hide();
-    }, 2000);
+    });
   }
 }

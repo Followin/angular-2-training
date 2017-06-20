@@ -9,7 +9,7 @@
     "deploy": "npm run build && firebase login && firebase deploy",
     "deploy:ci": "firebase deploy --token \"$FIREBASE_TOKEN\"",
     "server": "npm run build && node server/index.js",
-    "server:dev": "npm run build && nodemon server/index.js" 
+    "server:dev": "npm run build && nodemon server/index.js"
   },
   "author": "",
   "license": "ISC",
@@ -25,6 +25,7 @@
     "body-parser": "^1.17.2",
     "bootstrap": "^3.3.7",
     "core-js": "^2.4.1",
+    "cors": "^2.8.3",
     "express": "^4.15.3",
     "jquery": "^3.2.1",
     "normalize.css": "^7.0.0",

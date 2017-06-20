@@ -6,6 +6,10 @@ import Course from '../models/course';
 })
 export default class OrderCoursesByCreationDatePipe implements PipeTransform {
   public transform(courses: Course[]): any {
+    if(!courses) {
+      return courses;
+    }
+
     return courses.sort((course1, course2) => course1.createdAt.getTime() - course2.createdAt.getTime());
   }
 }

@@ -1,49 +1,49 @@
-import Course from '../models/course';
-import {BehaviorSubject, Observable} from 'rxjs';
+import {Observable} from 'rxjs';
+import {Http, Response} from "@angular/http";
+import {Injectable} from "@angular/core";
 
+import Course from '../models/course';
+import ItemsChunk from '../models/itemsChunk';
+
+class CourseFilter {
+  public skip?: number;
+  public limit?: number;
+  public title?: string;
+}
+
+@Injectable()
 export default class {
   private courses: Course[];
-  private coursesSubject: BehaviorSubject<Course[]>;
   private lastIndex: number = 2;
 
-  constructor() {
-    const upcomingDate = new Date();
-    upcomingDate.setDate(upcomingDate.getDate() + 5);
-    const freshDate = new Date();
-    freshDate.setDate(freshDate.getDate() - 5);
+  constructor(private http: Http) { }
 
-    this.courses = [{
-      id: 1,
-      title: 'Course 1',
-      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Dui suscipit volutpat, egestas hymenaeos tellus... '
-      + 'Ullamcorper at egestas? Hac tincidunt nostra quis at faucibus. Volutpat in erat ullamcorper, lectus velit diam fames...'
-      + 'Potenti orci praesent sem auctor dictum. Sollicitudin massa primis tempor sodales...',
-      duration: 5,
-      top: false,
-      createdAt: upcomingDate,
-    }, {
-      id: 2,
-      title: 'Course 2',
-      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Dui suscipit volutpat, egestas hymenaeos tellus... '
-      + 'Ullamcorper at egestas? Hac tincidunt nostra quis at faucibus. Volutpat in erat ullamcorper, lectus velit diam fames...'
-      + 'Potenti orci praesent sem auctor dictum. Sollicitudin massa primis tempor sodales...',
-      duration: 350,
-      top: true,
-      createdAt: freshDate,
-    }];
-
-    this.coursesSubject = new BehaviorSubject(this.courses);
-  }
-
-  public get(): Observable<Course[]>;
+  public get(options?: CourseFilter): Observable<ItemsChunk<Course>>;
   public get(id: number): Observable<Course>;
 
-  public get(id?: number): Observable<Course[]> | Observable<Course> {
-    if (id != null) {
-      return Observable.of(this.courses.find(course => course.id === id));
+  public get(options?: number | CourseFilter): Observable<ItemsChunk<Course>> | Observable<Course> {
+    if (typeof options === "number") {
+      return Observable.of(this.courses.find(course => course.id === options));
     }
 
-    return this.coursesSubject.asObservable().map(this.mapToData);
+    let url = `${__API__}/courses`;
+    if (options) {
+      url += "?";
+
+      if (options.title) {
+        url += `name=${options.title}&`
+      }
+
+      if (options.skip) {
+        url += `skip=${options.skip}&`
+      }
+
+      if (options.limit) {
+        url += `limit=${options.limit}`
+      }
+    }
+
+    return this.http.get(url).map(this.mapToCourses);
   }
 
   public createOrUpdate(course: Course) {
@@ -52,22 +52,27 @@ export default class {
     } else {
       this.create(course);
     }
-
-    this.coursesSubject.next(this.courses);
   }
 
-  public remove(id: number): void {
-    const existingCourse = this.get(id).subscribe(course => {
-      const index = this.courses.indexOf(course);
-
-      this.courses.splice(index, 1);
-
-      this.coursesSubject.next(this.courses);
-    });
+  public remove(id: number): Observable<boolean> {
+    return this.http.delete(`${__API__}/courses/${id}`).map(() => true);
   }
 
-  private mapToData(course: any): Course {
-    return <Course> course;
+  private mapToCourses(response: Response): ItemsChunk<Course> {
+    const body = response.json();
+    return {
+      count: body.count,
+      items: body.items.map((course: any) => {
+        return {
+          id: course.id,
+          title: course.name,
+          description: course.description,
+          top: course.isTopRated,
+          createdAt: new Date(course.date),
+          duration: course.length
+        }
+      })
+    };
   }
 
   private create(course: Course): void {

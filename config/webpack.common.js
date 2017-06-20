@@ -95,6 +95,11 @@ module.exports = {
       $: 'jquery',
       jQuery: 'jquery'
     }),
+
+    new webpack.DefinePlugin({
+      __API__: "'http://localhost:3000/api'",
+      __TOKEN_KEY__: '"auth"'
+    }),
     
     new HtmlWebpackPlugin({
       template: 'src/index.html'

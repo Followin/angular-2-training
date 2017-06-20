@@ -1,9 +1,9 @@
-import {Component, ChangeDetectionStrategy} from '@angular/core';
+import {Component, ChangeDetectionStrategy, ChangeDetectorRef} from '@angular/core';
 import Course from '../../models/course';
 import CourseService from '../../services/course.service';
 import LoaderService from '../../services/loader.service';
 import swal from 'sweetalert2';
-import {Observable} from 'rxjs';
+import ItemsChunk from "../../models/itemsChunk";
 
 @Component({
   selector: 'courses',
@@ -12,36 +12,37 @@ import {Observable} from 'rxjs';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export default class CoursesComponent {
-  private courses: Observable<Course[]>;
-  private hasCourses: boolean;
+  private courses: Course[] = [];
   private filter: string = '';
+  private itemsPerPage = 5;
+  private totalPages: number = 0;
+  private currentPage: number = 1;
 
   constructor(
     private courseService: CourseService,
     private loaderService: LoaderService,
+    private ref: ChangeDetectorRef,
   ) { }
 
   public ngOnInit() {
     this.initCourses();
-
-    this.courseService.get().subscribe(value => {
-      this.hasCourses = !!value.length;
-    });
   }
 
   private search() {
     this.initCourses();
   }
 
-  private initCourses() {
-    const minDate = new Date();
-    minDate.setDate(minDate.getDate() - 14);
+  private initCourses(page: number = 1) {
+    this.courseService.get({title: this.filter, limit: this.itemsPerPage, skip: this.itemsPerPage * (page - 1)})
+      .subscribe(this.handleCourses.bind(this));
 
-    this.courses = this.courseService.get()
-      .map(courses =>
-        courses.filter(course =>
-          course.createdAt >= minDate
-          && course.title.toLowerCase().indexOf(this.filter.toLowerCase()) > -1));
+    this.currentPage = page;
+  }
+
+  private handleCourses(value: ItemsChunk<Course>) {
+    this.courses = value.items;
+    this.totalPages = Math.ceil(value.count / this.itemsPerPage);
+    this.ref.markForCheck();
   }
 
   private deleteCourse(id: number) {
@@ -55,10 +56,13 @@ export default class CoursesComponent {
       confirmButtonText: 'Yes',
     }).then(() => {
       this.loaderService.show();
-      setTimeout(() => {
-        this.courseService.remove(id);
+      this.courseService.remove(id).subscribe(status => {
+        if (status) {
+          this.initCourses(this.currentPage);
+        }
+
         this.loaderService.hide();
-      }, 500);
+      });
     }, dismiss => {
       if (dismiss === 'cancel') {
         swal(

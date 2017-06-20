@@ -25,5 +25,6 @@ export default class LoginComponent {
 
   public logout(): void {
     this.loginService.logout();
+    location.reload();
   }
 }

@@ -2,6 +2,7 @@ import { NgModule, NgZone } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule, PreloadAllModules } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import {HttpModule, XHRBackend, RequestOptions, Http} from '@angular/http';
 
 import { ROUTES } from './app.routes';
 
@@ -20,10 +21,12 @@ import LoaderBlockComponent from './components/loader-block';
 import DateInputComponent from './components/date-input';
 import DurationInputComponent from './components/duration-input';
 import MultiSelectComponent from './components/multiselect';
+import PaginationComponent from './components/pagination';
 
 import CourseService from './services/course.service';
 import LoginService from './services/login.service';
 import LoaderService from './services/loader.service';
+import AuthHttpService from './services/authHttp.service';
 
 import DateHighlightDirective from './directives/date-highlight.directive';
 
@@ -34,6 +37,7 @@ import OrderCoursesByCreationDatePipe from './pipes/orderCoursesByCreationDate.p
   imports: [
     BrowserModule,
     FormsModule,
+    HttpModule,
     RouterModule.forRoot(ROUTES, { useHash: false, preloadingStrategy: PreloadAllModules }),
   ],
   declarations: [
@@ -52,6 +56,7 @@ import OrderCoursesByCreationDatePipe from './pipes/orderCoursesByCreationDate.p
     DateInputComponent,
     DurationInputComponent,
     MultiSelectComponent,
+    PaginationComponent,
 
     DateHighlightDirective,
 
@@ -62,17 +67,15 @@ import OrderCoursesByCreationDatePipe from './pipes/orderCoursesByCreationDate.p
     CourseService,
     LoginService,
     LoaderService,
+    {
+      provide: Http,
+      useFactory: (backend: XHRBackend, options: RequestOptions) => {
+        return new AuthHttpService(backend, options);
+      },
+      deps: [XHRBackend, RequestOptions]
+    }
   ],
   bootstrap: [ AppComponent ],
 })
 export class AppModule {
-  constructor(ngZone: NgZone) {
-    ngZone.onUnstable.subscribe(() => {
-      console.time('stabilized');
-    });
-
-    ngZone.onStable.subscribe(() => {
-      console.timeEnd('stabilized');
-    });
-  }
 }
