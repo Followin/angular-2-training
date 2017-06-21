@@ -17,7 +17,7 @@ export default class LoginComponent {
 
   public login(): void {
     this.loader.show();
-    this.loginService.login("admin", "admin").subscribe(result => {
+    this.loginService.login('admin', 'admin').subscribe(result => {
       this.router.navigate(['/courses']);
       this.loader.hide();
     });

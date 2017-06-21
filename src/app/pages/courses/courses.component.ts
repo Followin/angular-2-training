@@ -3,7 +3,7 @@ import Course from '../../models/course';
 import CourseService from '../../services/course.service';
 import LoaderService from '../../services/loader.service';
 import swal from 'sweetalert2';
-import ItemsChunk from "../../models/itemsChunk";
+import ItemsChunk from '../../models/itemsChunk';
 
 @Component({
   selector: 'courses',

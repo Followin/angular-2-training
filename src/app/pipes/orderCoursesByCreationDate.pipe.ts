@@ -6,7 +6,7 @@ import Course from '../models/course';
 })
 export default class OrderCoursesByCreationDatePipe implements PipeTransform {
   public transform(courses: Course[]): any {
-    if(!courses) {
+    if (!courses) {
       return courses;
     }
 

@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import {Observable, BehaviorSubject} from 'rxjs';
-import {Http} from "@angular/http";
+import {Http} from '@angular/http';
 
 @Injectable()
 export default class LoginService {
   private userNameSubject: BehaviorSubject<string> = new BehaviorSubject<string>(null);
 
   constructor(
-    private http: Http
+    private http: Http,
   ) {
     this.http.get(`${__API__}/auth`).subscribe(response => {
       this.userNameSubject.next(response.json().name);
@@ -30,7 +30,7 @@ export default class LoginService {
       }, () => {
         subscriber.next(false);
         subscriber.complete();
-      })
+      });
     });
 
   }

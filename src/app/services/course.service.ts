@@ -1,45 +1,41 @@
 import {Observable} from 'rxjs';
-import {Http, Response} from "@angular/http";
-import {Injectable} from "@angular/core";
+import {Http, Response} from '@angular/http';
+import {Injectable} from '@angular/core';
 
 import Course from '../models/course';
 import ItemsChunk from '../models/itemsChunk';
-
-class CourseFilter {
-  public skip?: number;
-  public limit?: number;
-  public title?: string;
-}
+import CourseFilter from '../models/courseFilter';
 
 @Injectable()
 export default class {
   private courses: Course[];
   private lastIndex: number = 2;
 
-  constructor(private http: Http) { }
+  constructor(private http: Http) {
+  }
 
   public get(options?: CourseFilter): Observable<ItemsChunk<Course>>;
   public get(id: number): Observable<Course>;
 
   public get(options?: number | CourseFilter): Observable<ItemsChunk<Course>> | Observable<Course> {
-    if (typeof options === "number") {
+    if (typeof options === 'number') {
       return Observable.of(this.courses.find(course => course.id === options));
     }
 
     let url = `${__API__}/courses`;
     if (options) {
-      url += "?";
+      url += '?';
 
       if (options.title) {
-        url += `name=${options.title}&`
+        url += `name=${options.title}&`;
       }
 
       if (options.skip) {
-        url += `skip=${options.skip}&`
+        url += `skip=${options.skip}&`;
       }
 
       if (options.limit) {
-        url += `limit=${options.limit}`
+        url += `limit=${options.limit}`;
       }
     }
 
@@ -69,9 +65,9 @@ export default class {
           description: course.description,
           top: course.isTopRated,
           createdAt: new Date(course.date),
-          duration: course.length
-        }
-      })
+          duration: course.length,
+        };
+      }),
     };
   }
 

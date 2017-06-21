@@ -72,8 +72,8 @@ import OrderCoursesByCreationDatePipe from './pipes/orderCoursesByCreationDate.p
       useFactory: (backend: XHRBackend, options: RequestOptions) => {
         return new AuthHttpService(backend, options);
       },
-      deps: [XHRBackend, RequestOptions]
-    }
+      deps: [XHRBackend, RequestOptions],
+    },
   ],
   bootstrap: [ AppComponent ],
 })

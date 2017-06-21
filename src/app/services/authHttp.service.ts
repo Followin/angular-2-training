@@ -1,5 +1,5 @@
 import { Http, Response, Headers, RequestOptions, Request, RequestOptionsArgs, XHRBackend } from '@angular/http';
-import {Observable} from "rxjs";
+import {Observable} from 'rxjs';
 
 export default class AuthHttpService extends Http {
   constructor (backend: XHRBackend, options: RequestOptions) {
@@ -7,9 +7,9 @@ export default class AuthHttpService extends Http {
   }
 
   public request(url: string | Request, options?: RequestOptionsArgs): Observable<Response> {
-    if(typeof url === 'string') {
+    if (typeof url === 'string') {
       if (!options) {
-        options = { headers: new Headers() }
+        options = { headers: new Headers() };
       }
 
       options.headers.set('Authorization', this.getAuthHeader());
