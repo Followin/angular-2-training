@@ -27,8 +27,10 @@ import CourseService from './services/course.service';
 import LoginService from './services/login.service';
 import LoaderService from './services/loader.service';
 import AuthHttpService from './services/authHttp.service';
+import AuthorService from './services/author.service';
 
 import DateHighlightDirective from './directives/date-highlight.directive';
+import ValidateArrayDirective from './directives/validateArray';
 
 import DurationPipe from './pipes/duration.pipe';
 import OrderCoursesByCreationDatePipe from './pipes/orderCoursesByCreationDate.pipe';
@@ -59,6 +61,7 @@ import OrderCoursesByCreationDatePipe from './pipes/orderCoursesByCreationDate.p
     PaginationComponent,
 
     DateHighlightDirective,
+    ValidateArrayDirective,
 
     DurationPipe,
     OrderCoursesByCreationDatePipe,
@@ -67,6 +70,7 @@ import OrderCoursesByCreationDatePipe from './pipes/orderCoursesByCreationDate.p
     CourseService,
     LoginService,
     LoaderService,
+    AuthorService,
     {
       provide: Http,
       useFactory: (backend: XHRBackend, options: RequestOptions) => {

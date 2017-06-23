@@ -13,7 +13,6 @@
     "no-conditional-assignment": true,
     "no-eval": true,
     "no-invalid-template-strings": true,
-    "no-invalid-this": true,
     "no-misused-new": true,
     "no-string-throw": true,
     "no-unsage-finally": true,

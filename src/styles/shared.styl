@@ -66,3 +66,21 @@ for i in (1..10) {
 .loading {
   filter: blur(5px);
 }
+
+.form-control-error {
+  margin: 5px 0;
+
+  font-size: .7em;
+  font-weight: normal;
+  color: colors.error-color;
+}
+
+.form-group {
+  label {
+    font-weight: normal;
+  }
+
+  &.has-error > label {
+    color: colors.error-color;
+  }
+}

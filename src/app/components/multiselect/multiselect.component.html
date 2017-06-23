@@ -1,1 +1,6 @@
-Skipped
+<ul class="form-control">
+  <li *ngFor="let selectItem of items; let i = index">
+    <input type="checkbox" id="{{i}}" name="selectItems" [(ngModel)]="selectItem.selected" (change)="change()"/>
+    <label for="{{i}}">{{selectItem.text}}</label>
+  </li>
+</ul>

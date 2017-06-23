@@ -7,6 +7,9 @@ import '@angular/router';
 
 import 'rxjs';
 
+import './app/utils/number.extensions';
+import './app/utils/object.extensions';
+
 //styles libs
 import '../node_modules/normalize.css/normalize.css';
 import '../node_modules/bootstrap/dist/css/bootstrap.css';

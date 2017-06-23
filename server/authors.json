@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1,
+    "name": "author 1"
+  },
+  {
+    "id": 2,
+    "name": "author 2"
+  },
+  {
+    "id": 3,
+    "name":  "author 3"
+  },
+  {
+    "id": 4,
+    "name":  "author 4"
+  },
+  {
+    "id": 5,
+    "name":  "author 5"
+  },
+  {
+    "id": 6,
+    "name":  "author 6"
+  }
+]

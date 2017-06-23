@@ -38,10 +38,6 @@ export default class DateInputComponent implements ControlValueAccessor {
       this.dateValue = date;
       this.strValue = moment(date).format(this.format);
     }
-
-    if (this.propagateChange) {
-      this.propagateChange(this.dateValue);
-    }
   }
 
   public registerOnChange(fn: any): void {

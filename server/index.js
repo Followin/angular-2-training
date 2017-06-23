@@ -5,6 +5,7 @@ const path = require('path');
 
 const coursesController = require('./controllers/courses');
 const usersController = require('./controllers/users');
+const authorsController = require('./controllers/authors');
 
 const port = process.env.PORT || 3000;
 
@@ -17,6 +18,7 @@ app.use(express.static(path.resolve('./dist')));
 
 app.get('/api/courses', coursesController.get);
 app.delete('/api/courses/:id', coursesController.delete);
+app.get('/api/authors', authorsController.get);
 app.get('/api/auth', usersController.get);
 app.post('/api/auth', usersController.login);
 app.get('*', (req, res) => {

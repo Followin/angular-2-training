@@ -9,7 +9,8 @@
     "deploy": "npm run build && firebase login && firebase deploy",
     "deploy:ci": "firebase deploy --token \"$FIREBASE_TOKEN\"",
     "server": "npm run build && node server/index.js",
-    "server:dev": "npm run build && nodemon server/index.js"
+    "server:dev": "npm run build && nodemon server/index.js",
+    "server:nobuild": "nodemon server/index.js"
   },
   "author": "",
   "license": "ISC",

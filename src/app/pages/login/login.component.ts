@@ -6,7 +6,6 @@ import LoaderService from '../../services/loader.service';
 @Component({
   selector: 'login-page',
   templateUrl: './login.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export default class LoginComponent {
   constructor(
@@ -15,7 +14,7 @@ export default class LoginComponent {
     private loader: LoaderService,
   ) { }
 
-  public login(): void {
+  public logIn(): void {
     this.loader.show();
     this.loginService.login('admin', 'admin').subscribe(result => {
       this.router.navigate(['/courses']);

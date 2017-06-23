@@ -1,4 +1,4 @@
 <div class="col-xs-9 no-padding">
-    <input type="number" [(ngModel)]="duration" #ctrl="ngModel" class="{{className}}" id="{{id}}"/>
+    <input type="text" [(ngModel)]="value" class="{{className}}" id="{{id}}" (change)="change($event)" (keyup)="change($event)"/>
 </div>
-<p class="col-xs-3">{{duration | duration}}</p>
+<p class="col-xs-3">{{value | duration}}</p>
