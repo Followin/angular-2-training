@@ -4,10 +4,11 @@ import {ActivatedRoute} from '@angular/router';
 @Component({
   selector: 'course-edit',
   templateUrl: './course-edit.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export default class CourseEditComponent implements OnInit {
   private title: String;
+  private data: Date;
+  private data2: string = '';
 
   constructor(
     private ref: ChangeDetectorRef,
@@ -21,5 +22,9 @@ export default class CourseEditComponent implements OnInit {
 
       this.ref.markForCheck();
     });
+  }
+
+  dateChanged(value: any) {
+    console.log(value);
   }
 }

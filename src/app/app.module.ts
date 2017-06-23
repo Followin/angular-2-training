@@ -1,7 +1,7 @@
-import { NgModule, NgZone } from '@angular/core';
+import {NgModule, NgZone, forwardRef} from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule, PreloadAllModules } from '@angular/router';
-import { FormsModule } from '@angular/forms';
+import {FormsModule, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {HttpModule, XHRBackend, RequestOptions, Http} from '@angular/http';
 
 import { ROUTES } from './app.routes';
